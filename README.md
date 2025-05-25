@@ -47,7 +47,7 @@ Executing: python -c "import torch; print(torch.cuda.is_available())"
 ## Removing the Gemini API Key from Windows Credential Manager
 The Gemini API will automatically be deleted from your Windows Credential Manager when Skript program is uninstalled.
 
-If you wish to delete the Gemini API key stored by skript, execute this:
+If you wish to manually delete the Gemini API key stored by skript, execute this:
 
 ```bash
 cmdkey /delete:gemini.skript
