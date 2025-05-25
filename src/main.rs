@@ -12,8 +12,16 @@ fn main() -> anyhow::Result<()> {
     let api_key = match env::var("GOOGLE_API_KEY") {
         Ok(key) if !key.trim().is_empty() => key,
         _ => {
-            eprintln!("\n[ERROR] Gemini API key (GOOGLE_API_KEY) is missing or invalid. Please set the environment variable and try again.\n");
-            std::process::exit(1);
+            println!("\n[INFO] Gemini API key (GOOGLE_API_KEY) is missing. Please enter your Gemini API key:");
+            let mut input = String::new();
+            std::io::stdin().read_line(&mut input)?;
+            let key = input.trim().to_string();
+            if key.is_empty() {
+                eprintln!("\n[ERROR] No Gemini API key provided. Exiting.\n");
+                std::process::exit(1);
+            }
+            unsafe { env::set_var("GOOGLE_API_KEY", &key) };
+            key
         }
     };
     let client = Client::new();
