@@ -1,6 +1,6 @@
 [package]
 name = "skript"
-version = "0.5.0"
+version = "0.6.5"
 edition = "2021"
 authors = ["Pojesh"]
 license = "GPL-3.0-or-later"
