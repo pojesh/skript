@@ -67,7 +67,7 @@ fn main() -> anyhow::Result<()> {
                 continue;
             }
         };
-        print!("Suggested command: {}", text);
+        
         run_command(&text);
     }
 
@@ -93,7 +93,7 @@ fn run_command(command: &str) {
         return;
     }
 
-    println!("\nExecuting: {}\n", sanitized);
+    print!("Executing: {}\n", sanitized);
 
     let output = Command::new("powershell")
        .arg("-Command")
@@ -105,12 +105,12 @@ fn run_command(command: &str) {
             let stdout = String::from_utf8_lossy(&output.stdout);
             let stderr = String::from_utf8_lossy(&output.stderr);
             if !stdout.trim().is_empty() {
-                println!("[stdout]\n{}", stdout);
+                print!("{}", stdout);
             }
             if !stderr.trim().is_empty() {
                 eprintln!("[stderr]\n{}", stderr);
             }
-            println!("\nProcess exited with status: {}", output.status);
+            println!("Process exited with status: {}", output.status);
         },
         Err(e) => eprintln!("\n[ERROR] Failed to execute command: {}\n", e),
     }
