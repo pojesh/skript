@@ -1,7 +1,5 @@
-// src/main.rs
-use std::env;
 use std::process::Command;
-
+use keyring::Entry;
 use reqwest::blocking::Client;
 use reqwest::header::CONTENT_TYPE;
 use rustyline::DefaultEditor;
@@ -9,21 +7,8 @@ use serde_json::{json, Value};
 
 fn main() -> anyhow::Result<()> {
     let mut rl = DefaultEditor::new()?;
-    let api_key = match env::var("GOOGLE_API_KEY") {
-        Ok(key) if !key.trim().is_empty() => key,
-        _ => {
-            println!("\n[INFO] Gemini API key (GOOGLE_API_KEY) is missing. Please enter your Gemini API key:");
-            let mut input = String::new();
-            std::io::stdin().read_line(&mut input)?;
-            let key = input.trim().to_string();
-            if key.is_empty() {
-                eprintln!("\n[ERROR] No Gemini API key provided. Exiting.\n");
-                std::process::exit(1);
-            }
-            unsafe { env::set_var("GOOGLE_API_KEY", &key) };
-            key
-        }
-    };
+
+    let api_key = get_or_store_api_key("skript", "gemini")?;
     let client = Client::new();
 
     println!("Skript AI Shell - Type 'exit' to quit");
@@ -74,6 +59,25 @@ fn main() -> anyhow::Result<()> {
     Ok(())
 }
 
+fn get_or_store_api_key(service: &str, user: &str) -> anyhow::Result<String> {
+    let entry = Entry::new(service, user)?;
+    match entry.get_password() {
+        Ok(key) => Ok(key),
+        Err(_) => {
+            println!("\n[SETUP] No Gemini API key found. Please enter your key:");
+            let mut input = String::new();
+            std::io::stdin().read_line(&mut input)?;
+            let key = input.trim().to_string();
+            if key.is_empty() {
+                eprintln!("[ERROR] Empty API key. Exiting.");
+                std::process::exit(1);
+            }
+            entry.set_password(&key)?;
+            Ok(key)
+        }
+    }
+}
+
 fn parse_response(response: String) -> String {
     let parsed: Value = serde_json::from_str(&response).unwrap_or_default();
 
@@ -87,18 +91,18 @@ fn parse_response(response: String) -> String {
 
 fn run_command(command: &str) {
     let sanitized = command.trim();
-    
+
     if sanitized.is_empty() {
         println!("\nNo valid command to execute.\n");
         return;
     }
 
-    print!("Executing: {}\n", sanitized);
+    println!("Executing: {}\n", sanitized);
 
     let output = Command::new("powershell")
-       .arg("-Command")
-       .arg(sanitized)
-       .output();
+        .arg("-Command")
+        .arg(sanitized)
+        .output();
 
     match output {
         Ok(output) => {
@@ -115,10 +119,3 @@ fn run_command(command: &str) {
         Err(e) => eprintln!("\n[ERROR] Failed to execute command: {}\n", e),
     }
 }
-
-
-
-
-
-
-
