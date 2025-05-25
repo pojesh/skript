@@ -5,8 +5,7 @@ skript is a natural language command prompt designed for the native Windows Term
 ## Features
 - Translate natural language instructions into Windows PowerShell commands
 - Seamless integration with Windows Terminal
-- Secure and privacy-conscious: no data leaves your machine
-- Extensible for custom workflows
+- Fast command generation with Gemini 1.5 Flash
 
 ## Getting Started
 
