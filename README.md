@@ -35,9 +35,9 @@ skript is a natural language command prompt designed for the native Windows Term
 
 ### 4. Using skript
 - Enter commands in plain English, for example:
-  ```
-  skript> check cuda in pytorch
-  ```
+```
+skript> check cuda in pytorch
+```
 - skript will translate your request and execute the appropriate command.
 
 ```
