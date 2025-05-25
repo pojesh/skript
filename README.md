@@ -36,10 +36,25 @@ Upon first run, you will be prompted to enter your Gemini API key if the `GOOGLE
 Type your command in natural language, for example:
 
 ```
-List all files modified in the last 24 hours
+skript> check cuda in pytorch
 ```
 
-skript will translate and execute the appropriate Windows PowerShell command.
+skript will translate and execute the appropriate command.
+
+```
+Executing: python -c "import torch; print(torch.cuda.is_available())"
+```
+
+## Removing the Gemini API Key from Windows Credential Manager
+If you wish to delete the Gemini API key stored by skript, execute this:
+
+```bash
+cmdkey /delete:gemini.skript
+```
+
+The next time you run skript, you will be prompted to enter your Gemini API key again.
+
+The Gemini API will automatically be deleted from your Windows Credential Manager when Skript program is uninsatalled.
 
 ## Contributing
 Contributions are welcome! Please open issues or submit pull requests.
