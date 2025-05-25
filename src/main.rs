@@ -49,7 +49,7 @@ fn main() -> anyhow::Result<()> {
         let request_body = json!({
             "contents": [{
                 "parts": [{
-                    "text": format!("You are a Windows CMD expert. Provide only the CMD command(with existing modules unless otherwise explicitly specified) for this prompt: '{}'. No explanation.", prompt)
+                    "text": format!("You are a Windows PowerShell expert. Provide only the PowerShell command (using built-in modules unless otherwise explicitly specified) for this prompt: '{}'. If the command contains quotes, ensure only single quotes are used. The command itself should never be enclosed in quotes. No explanation.", prompt)
                 }]
             }]
         });
@@ -86,7 +86,8 @@ fn parse_response(response: String) -> String {
 }
 
 fn run_command(command: &str) {
-    let sanitized = command.trim().replace("\r", "").replace("\n", "");
+    let sanitized = command.trim();
+    
     if sanitized.is_empty() {
         println!("\nNo valid command to execute.\n");
         return;
@@ -94,25 +95,10 @@ fn run_command(command: &str) {
 
     println!("\nExecuting: {}\n", sanitized);
 
-    let output = if sanitized.starts_with("python -c ") {
-        // Extract Python command parts
-        let args = sanitized.splitn(3, ' ').collect::<Vec<_>>();
-        if args.len() < 3 {
-            eprintln!("\n[ERROR] Invalid Python command\n");
-            return;
-        }
-        let code = args[2];
-        Command::new("python")
-            .arg("-c")
-            .arg(code)
-            .output()
-    } else {
-        // Fallback for general commands
-        Command::new("cmd")
-            .arg("/C")
-            .arg(sanitized)
-            .output()
-    };
+    let output = Command::new("powershell")
+       .arg("-Command")
+       .arg(sanitized)
+       .output();
 
     match output {
         Ok(output) => {
