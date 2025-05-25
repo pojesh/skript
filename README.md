@@ -42,4 +42,4 @@ skript will translate and execute the appropriate Windows command.
 Contributions are welcome! Please open issues or submit pull requests.
 
 ## License
-This project is licensed under the MIT License. See [LICENSE](LICENSE) for details.
+This project is licensed under the GNU License. See [LICENSE](LICENSE) for details.
