@@ -27,19 +27,33 @@ cargo build --release
 
 ### Running skript
 ```sh
-cargo run --release
+cargo run 
 ```
+cargo wix --nocapture
 
-Upon first run, you will be prompted to enter your Gemini API key if the `GOOGLE_API_KEY` environment variable is not set.
+## Installation and Usage
 
-## Usage
-Type your command in natural language, for example:
+### 1. Download and Install
+- Go to the [GitHub Releases](https://github.com/pojesh/skript/releases) page.
+- Download the latest `.msi` installer package for skript.
+- Double-click the `.msi` file and follow the prompts to complete installation.
 
-```
-skript> check cuda in pytorch
-```
+### 2. Launch skript
+- Open any terminal (Windows Terminal, Command Prompt, or PowerShell).
+- Type `skript` and press Enter to start skript terminal mode.
 
-skript will translate and execute the appropriate command.
+### 3. First Launch: Gemini API Key Setup
+- On first launch, skript will prompt you for a Gemini API key.
+- To create a Gemini API key, visit [Google AI Studio](https://aistudio.google.com/apikey).
+- Copy your API key and paste it into skript when prompted.
+- The key will be securely saved to Windows Credential Manager for future use.
+
+### 4. Using skript
+- Enter commands in plain English, for example:
+  ```
+  skript> check cuda in pytorch
+  ```
+- skript will translate your request and execute the appropriate command.
 
 ```
 Executing: python -c "import torch; print(torch.cuda.is_available())"
