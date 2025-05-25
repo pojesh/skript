@@ -12,7 +12,6 @@ skript is a natural language command prompt designed for the native Windows Term
 
 ### Prerequisites
 - Windows 10 or later
-- [Rust toolchain](https://www.rust-lang.org/tools/install)
 - Windows Terminal
 - A Gemini API key from Google AI Studio
 
@@ -36,7 +35,8 @@ cargo wix --nocapture
 ### 1. Download and Install
 - Go to the [GitHub Releases](https://github.com/pojesh/skript/releases) page.
 - Download the latest `.msi` installer package for skript.
-- Double-click the `.msi` file and follow the prompts to complete installation.
+- Double-click the `.msi` file and allow admin priviledges to complete installation.
+- Admin priviledges are required to add ```skript``` to your PATH.
 
 ### 2. Launch skript
 - Open any terminal (Windows Terminal, Command Prompt, or PowerShell).
@@ -71,7 +71,37 @@ The next time you run skript, you will be prompted to enter your Gemini API key 
 The Gemini API will automatically be deleted from your Windows Credential Manager when Skript program is uninsatalled.
 
 ## Contributing
+
+If you wish to build skript from source or contribute to development, follow these steps:
+
+### Prerequisites
+- Rust
+- WixTools 3.14.1 (https://github.com/wixtoolset/wix3/releases)
+
+### Manual Installation
+```bash
+# Clone the repository
+git clone https://github.com/pojesh/skript.git
+cd skript
+
+# Build the skript executable
+cargo build --release
+```
+
+### Running skript from Source
+```bash
+cargo run
+```
+This will launch the skript terminal. 
+
+### Building the MSI Installer
+```bash
+cargo wix --nocapture
+```
+This builds the msi installer with environment variable PATH addition.
+
+
 Contributions are welcome! Please open issues or submit pull requests.
 
 ## License
-This project is licensed under the GNU License. See [LICENSE](LICENSE) for details.
+This project is licensed under the GNU General Public License (GPL). See [LICENSE](LICENSE) for details.
