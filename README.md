@@ -15,21 +15,6 @@ skript is a natural language command prompt designed for the native Windows Term
 - Windows Terminal
 - A Gemini API key from Google AI Studio
 
-### Installation
-```sh
-# Clone the repository
-git clone https://github.com/pojesh/skript.git
-cd skript
-# Build the project
-cargo build --release
-```
-
-### Running skript
-```sh
-cargo run 
-```
-cargo wix --nocapture
-
 ## Installation and Usage
 
 ### 1. Download and Install
